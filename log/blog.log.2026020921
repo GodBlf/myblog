@@ -1,0 +1,22 @@
+{"level":"INFO","ts":"2026-02-09T21:28:01.514+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T21:28:01.645+0800","caller":"database/user.go:51","msg":"create user success","name":"dqq"}
+{"level":"INFO","ts":"2026-02-09T21:28:37.204+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T21:28:37.285+0800","caller":"database/user.go:62","msg":"delete user success","name":"123"}
+{"level":"INFO","ts":"2026-02-09T21:29:36.520+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"ERROR","ts":"2026-02-09T21:29:36.597+0800","caller":"database/user.go:48","msg":"create user failed","name":"dqq","error":"Error 1062 (23000): Duplicate entry 'dqq' for key 'user.idx_name'"}
+{"level":"INFO","ts":"2026-02-09T21:30:47.280+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T21:30:47.354+0800","caller":"database/user.go:62","msg":"delete user success","name":"dqq"}
+{"level":"INFO","ts":"2026-02-09T21:30:58.649+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T21:30:58.709+0800","caller":"database/user.go:51","msg":"create user success","name":"dqq"}
+{"level":"INFO","ts":"2026-02-09T21:51:14.323+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T21:51:14.336+0800","caller":"handler/login.go:72","msg":"user login success","name":"dqq","uid":9}
+{"level":"PANIC","ts":"2026-02-09T21:51:14.340+0800","caller":"database/db_connection.go:98","msg":"failed to connect to redis","error":"dial tcp [::1]:6379: connectex: No connection could be made because the target machine actively refused it."}
+{"level":"INFO","ts":"2026-02-09T21:51:18.976+0800","caller":"handler/login.go:72","msg":"user login success","name":"dqq","uid":9}
+{"level":"INFO","ts":"2026-02-09T21:53:27.828+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T21:53:41.048+0800","caller":"handler/login.go:72","msg":"user login success","name":"dqq","uid":9}
+{"level":"INFO","ts":"2026-02-09T21:55:07.826+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-09T21:55:20.362+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":9,"blog count":1}
+{"level":"DEBUG","ts":"2026-02-09T21:55:28.469+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"虽然所有权机制（Ownership）起步很难，但习惯后真的真香..."}
+{"level":"INFO","ts":"2026-02-09T21:56:01.360+0800","caller":"handler/login.go:72","msg":"user login success","name":"dqq","uid":9}
+{"level":"DEBUG","ts":"2026-02-09T21:56:01.388+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":9,"blog count":1}
+{"level":"DEBUG","ts":"2026-02-09T21:56:15.542+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"虽然所有权机制（Ownership）起步很难，但习惯后真的真香..."}

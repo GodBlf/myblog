@@ -1,0 +1,69 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/js/my.js"></script>
+    <title>博客详情</title>
+</head>
+
+<body>
+<span style="display: none;"><input id="bid" value="{{.bid}}"></span>
+<div id="view" align="center" style="display: block; width: 50%; margin: auto;">
+    <span id="title" style="width: 100%;">{{.title}}</span><br>
+    <hr><br>
+    <div id="article" style="white-space: pre-wrap;">{{.article}}</div><br>更新于{{.update_time}}
+
+    <br><button id="edit_bnt" onclick="edit();" style="display: none;">编辑</button>
+</div>
+<div id="update" align="center" style="display: none; width: 50%; margin: auto;">
+    <input type="text" id="edit_title" style="width: 100%;" name="edit_title" value="{{.title}}"></input><br>
+    <br>
+    <hr><br>
+    <textarea id="edit_article" name="edit_article" rows="15" style="width: 100%;">{{.article}}</textarea><br><br>
+    <button id="update_bnt" onclick="update();">提交</button><br>
+    <span id="msg" style="color: red;"></span>
+</div>
+<script>
+    // 切换到编辑模式：隐藏详情视图，显示编辑表单
+    function edit() {
+        document.querySelector("#view").style.display = 'none';
+        document.querySelector("#update").style.display = 'block';
+    };
+    $(document).ready(function() {
+        var bid = document.querySelector("#bid").value;
+        var token = get_auth_token(); // 假设你有这个获取 token 的函数
+
+        // 调用你现有的权限校验接口
+        $.get("/blog/belong?bid=" + bid + "&token=" + token, function(data) {
+            if (data === "true") {
+                $("#edit_bnt").show(); // 如果是作者，显示按钮
+            }
+        });
+    });    // 提交更新数据
+    function update() {
+        var title = document.querySelector("#edit_title").value;
+        var article = document.querySelector("#edit_article").value;
+        var bid = document.querySelector("#bid").value;
+
+        $.ajax({
+            type: "POST",
+            url: "/blog/update",
+            data: { "title": title, "article": article, "bid": bid },
+            beforeSend: function (request) {
+                // 从 sessionStorage 或其他地方获取 token 并设置请求头
+                var auth_token = get_auth_token();
+                request.setRequestHeader("auth_token", auth_token);
+            },
+            success: function (result) {
+                // 更新成功后跳转回博客详情页
+                window.location.replace("/blog/" + bid);
+            }
+        }).fail(function (result, result1, result2) {
+            // 失败时在页面显示错误信息
+            $('#msg').html(result.responseText);
+        });
+    };
+</script>
+
+</body>

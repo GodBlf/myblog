@@ -1,0 +1,1 @@
+{"level":"INFO","ts":"2026-02-08T00:14:58.019+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}

@@ -1,0 +1,4 @@
+{"level":"INFO","ts":"2026-02-08T12:29:13.729+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-08T12:29:13.848+0800","caller":"database/user.go:51","msg":"create user success","name":"test_user"}
+{"level":"INFO","ts":"2026-02-08T12:29:40.815+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-08T12:29:40.878+0800","caller":"database/user.go:62","msg":"delete user success","name":"test_user"}

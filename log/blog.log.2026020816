@@ -1,0 +1,2 @@
+{"level":"INFO","ts":"2026-02-08T16:39:53.468+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"DEBUG","ts":"2026-02-08T16:39:53.524+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":2}

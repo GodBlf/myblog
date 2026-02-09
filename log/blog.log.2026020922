@@ -1,0 +1,30 @@
+{"level":"INFO","ts":"2026-02-09T22:04:19.690+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T22:05:34.048+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T22:06:06.408+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T22:06:46.096+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T22:06:46.156+0800","caller":"handler/login.go:72","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-09T22:06:46.168+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-09T22:06:46.185+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":1,"blog count":2}
+{"level":"DEBUG","ts":"2026-02-09T22:06:47.444+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"双十一来临喜洋洋，购物狂欢乐无边。电商盛宴满眼芳，心愿成真喜笑颜。"}
+{"level":"DEBUG","ts":"2026-02-09T22:06:48.809+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重要..."}
+{"level":"INFO","ts":"2026-02-09T22:06:59.904+0800","caller":"handler/login.go:72","msg":"user login success","name":"two","uid":2}
+{"level":"DEBUG","ts":"2026-02-09T22:06:59.922+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":2,"blog count":1}
+{"level":"DEBUG","ts":"2026-02-09T22:07:30.818+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"关键在于牛奶的温度和咖啡豆的新鲜度..."}
+{"level":"INFO","ts":"2026-02-09T22:11:34.722+0800","caller":"handler/login.go:72","msg":"user login success","name":"five","uid":5}
+{"level":"DEBUG","ts":"2026-02-09T22:11:34.746+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":5,"blog count":1}
+{"level":"DEBUG","ts":"2026-02-09T22:11:36.110+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"这家店的面条是手擀的，汤头熬制了12小时..."}
+{"level":"INFO","ts":"2026-02-09T22:11:48.916+0800","caller":"handler/login.go:72","msg":"user login success","name":"five","uid":5}
+{"level":"DEBUG","ts":"2026-02-09T22:11:48.932+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":5,"blog count":1}
+{"level":"INFO","ts":"2026-02-09T22:16:54.185+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-09T22:16:54.198+0800","caller":"handler/login.go:72","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-09T22:16:54.209+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-09T22:16:54.229+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":1,"blog count":2}
+{"level":"DEBUG","ts":"2026-02-09T22:16:55.078+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重要..."}
+{"level":"ERROR","ts":"2026-02-09T22:20:50.241+0800","caller":"handler/blog.go:72","msg":"invalid update blog request","error":"Key: 'UpdateRequest.BlogId' Error:Field validation for 'BlogId' failed on the 'gt' tag\nKey: 'UpdateRequest.Title' Error:Field validation for 'Title' failed on the 'gt' tag\nKey: 'UpdateRequest.Article' Error:Field validation for 'Article' failed on the 'gt' tag"}
+{"level":"INFO","ts":"2026-02-09T22:22:51.275+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"DEBUG","ts":"2026-02-09T22:22:51.400+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重123要..."}
+{"level":"INFO","ts":"2026-02-09T22:23:05.537+0800","caller":"handler/login.go:72","msg":"user login success","name":"three","uid":3}
+{"level":"INFO","ts":"2026-02-09T22:23:05.572+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-09T22:23:05.595+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":3,"blog count":1}
+{"level":"DEBUG","ts":"2026-02-09T22:23:06.773+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"这里的瀑布和黑沙滩美得让人窒息，建议租一辆4x4越野车..."}
+{"level":"DEBUG","ts":"2026-02-09T22:23:10.590+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"这里的瀑布和黑沙滩美得让人窒息，建议租一辆4x4越野车...发士大夫撒旦发生大"}

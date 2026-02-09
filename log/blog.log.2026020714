@@ -1,0 +1,4 @@
+{"level":"INFO","ts":"2026-02-07T14:00:06.758+0800","caller":"test/logger_test.go:12","msg":"这是一个测试日志","key":"value"}
+{"level":"INFO","ts":"2026-02-07T14:01:41.949+0800","caller":"test/logger_test.go:12","msg":"这是一个测试日志","key":"value"}
+{"level":"INFO","ts":"2026-02-07T14:09:47.758+0800","caller":"test/logger_test.go:12","msg":"这是一个测试日志","key":"value"}
+{"level":"INFO","ts":"2026-02-07T14:15:20.718+0800","caller":"testing/testing.go:1792","msg":"这是一个测试日志","key":"value"}
