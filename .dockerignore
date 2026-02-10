@@ -1,0 +1,13 @@
+.git
+.gitignore
+.idea
+
+log
+*.log
+*.log.*
+
+docker-compose.yml
+
+README.md
+doc
+

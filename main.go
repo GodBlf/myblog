@@ -63,5 +63,5 @@ func main() {
 	router.POST("/blog/publish", middleware.Auth(), handler.NewBlogPublish())
 	router.POST("/blog/unpublish", middleware.Auth(), handler.NewBlogUnpublish())
 
-	router.Run("localhost:5678")
+	router.Run(":5678")
 }
