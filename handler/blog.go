@@ -10,7 +10,6 @@ import (
 	"go.uber.org/zap"
 )
 
-// 获取用户博客列表
 func NewBlogList() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		param := ctx.Param("uid")
@@ -25,7 +24,13 @@ func NewBlogList() gin.HandlerFunc {
 	}
 }
 
-// 获取博客详情
+func NewPublicBlogList() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		blogs := database.GetPublicBlogList()
+		ctx.HTML(http.StatusOK, "public_blog_list.html", blogs)
+	}
+}
+
 func NewBlogDetail() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		param := ctx.Param("bid")
@@ -45,6 +50,30 @@ func NewBlogDetail() gin.HandlerFunc {
 			"article":     blog.Article,
 			"bid":         blog.Id,
 			"update_time": blog.UpdateTime.Format("2006-01-02 15:04:05"),
+			"is_public":   database.IsBlogPublic(blog.Id),
+		})
+	}
+}
+
+func NewPublicBlogDetail() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		param := ctx.Param("bid")
+		bid, err := strconv.Atoi(param)
+		if err != nil {
+			ctx.String(http.StatusBadRequest, "invalid blog id")
+			return
+		}
+		blog := database.GetPublicBlogById(bid)
+		if blog == nil {
+			ctx.String(http.StatusNotFound, "public blog not exist")
+			return
+		}
+		ctx.HTML(http.StatusOK, "blog_public.html", gin.H{
+			"title":       blog.Title,
+			"article":     blog.Article,
+			"bid":         blog.Id,
+			"user_name":   blog.UserName,
+			"update_time": blog.UpdateTime.Format("2006-01-02 15:04:05"),
 		})
 	}
 }
@@ -58,6 +87,10 @@ type UpdateRequest struct {
 type CreateRequest struct {
 	Title   string `json:"title" form:"title" binding:"required"`
 	Article string `json:"article" form:"article" binding:"required"`
+}
+
+type PublishRequest struct {
+	BlogId int `json:"bid" form:"bid" binding:"required,gt=0"`
 }
 
 func NewBlogUpdate() gin.HandlerFunc {
@@ -80,8 +113,18 @@ func NewBlogUpdate() gin.HandlerFunc {
 			return
 		}
 
-		loginUid := ctx.Value("uid")
-		if blog.UserId != loginUid || loginUid == nil {
+		loginUidValue, ok := ctx.Get("uid")
+		if !ok {
+			ctx.String(http.StatusForbidden, "auth failed")
+			return
+		}
+		loginUid, ok := loginUidValue.(int)
+		if !ok || loginUid <= 0 {
+			ctx.String(http.StatusForbidden, "auth failed")
+			return
+		}
+
+		if blog.UserId != loginUid {
 			ctx.String(http.StatusForbidden, "no permission to update")
 			return
 		}
@@ -138,7 +181,82 @@ func NewBlogCreate() gin.HandlerFunc {
 	}
 }
 
-// 从jwt里解析出uid, 判断blog_id是否属于uid
+func NewBlogPublish() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		request := &PublishRequest{}
+		if err := ctx.ShouldBind(request); err != nil {
+			ctx.String(http.StatusBadRequest, "invalid parameter")
+			return
+		}
+
+		loginUidValue, ok := ctx.Get("uid")
+		if !ok {
+			ctx.String(http.StatusForbidden, "auth failed")
+			return
+		}
+		loginUid, ok := loginUidValue.(int)
+		if !ok || loginUid <= 0 {
+			ctx.String(http.StatusForbidden, "auth failed")
+			return
+		}
+
+		blog := database.GetBlogById(request.BlogId)
+		if blog == nil {
+			ctx.String(http.StatusBadRequest, "blog not exist")
+			return
+		}
+		if blog.UserId != loginUid {
+			ctx.String(http.StatusForbidden, "no permission to publish")
+			return
+		}
+
+		if err := database.PublishBlog(request.BlogId, loginUid); err != nil {
+			zap.L().Error("publish blog failed", zap.Int("bid", request.BlogId), zap.Int("uid", loginUid), zap.Error(err))
+			ctx.String(http.StatusInternalServerError, "publish blog failed")
+			return
+		}
+		ctx.String(http.StatusOK, "publish blog success")
+	}
+}
+
+func NewBlogUnpublish() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		request := &PublishRequest{}
+		if err := ctx.ShouldBind(request); err != nil {
+			ctx.String(http.StatusBadRequest, "invalid parameter")
+			return
+		}
+
+		loginUidValue, ok := ctx.Get("uid")
+		if !ok {
+			ctx.String(http.StatusForbidden, "auth failed")
+			return
+		}
+		loginUid, ok := loginUidValue.(int)
+		if !ok || loginUid <= 0 {
+			ctx.String(http.StatusForbidden, "auth failed")
+			return
+		}
+
+		blog := database.GetBlogById(request.BlogId)
+		if blog == nil {
+			ctx.String(http.StatusBadRequest, "blog not exist")
+			return
+		}
+		if blog.UserId != loginUid {
+			ctx.String(http.StatusForbidden, "no permission to unpublish")
+			return
+		}
+
+		if err := database.UnpublishBlog(request.BlogId, loginUid); err != nil {
+			zap.L().Error("unpublish blog failed", zap.Int("bid", request.BlogId), zap.Int("uid", loginUid), zap.Error(err))
+			ctx.String(http.StatusInternalServerError, "unpublish blog failed")
+			return
+		}
+		ctx.String(http.StatusOK, "unpublish blog success")
+	}
+}
+
 func BlogBelong(ctx *gin.Context) {
 	bids := ctx.Query("bid")
 	token := ctx.Query("token")
