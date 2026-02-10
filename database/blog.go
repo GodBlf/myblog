@@ -70,3 +70,18 @@ func UpdateBlog(blog *Blog) error {
 		"article": blog.Article,
 	}).Error
 }
+
+func CreateBlog(blog *Blog) error {
+	if blog.UserId <= 0 {
+		return fmt.Errorf("invalid user id")
+	}
+	if len(blog.Title) == 0 || len(blog.Article) == 0 {
+		return fmt.Errorf("could not set blog title or article to empty")
+	}
+	if blog.UpdateTime.IsZero() {
+		blog.UpdateTime = time.Now()
+	}
+
+	db := GetBlogDBConnection()
+	return db.Create(blog).Error
+}

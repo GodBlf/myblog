@@ -21,7 +21,7 @@ func NewBlogList() gin.HandlerFunc {
 		}
 		blogs := database.GetBlogByUserId(uid)
 		zap.L().Debug("get blog list", zap.Int("uid", uid), zap.Int("blog count", len(blogs)))
-		ctx.HTML(http.StatusOK, "blog_list.html", blogs) //go template会根据传入的blogs的类型来决定在html里怎么访问它们
+		ctx.HTML(http.StatusOK, "blog_list.html", blogs)
 	}
 }
 
@@ -44,30 +44,27 @@ func NewBlogDetail() gin.HandlerFunc {
 			"title":       blog.Title,
 			"article":     blog.Article,
 			"bid":         blog.Id,
-			"update_time": blog.UpdateTime.Format("2006-01-02 15:04:05"), //go template里没有格式化时间的函数，所以只能在这里先格式化好
+			"update_time": blog.UpdateTime.Format("2006-01-02 15:04:05"),
 		})
 	}
 }
 
 type UpdateRequest struct {
-	BlogId  int    `json:"bid" form:"bid" binding:"required,gt=0"` //binding:"gt=0"表示这个参数必须大于0
+	BlogId  int    `json:"bid" form:"bid" binding:"required,gt=0"`
+	Title   string `json:"title" form:"title" binding:"required"`
+	Article string `json:"article" form:"article" binding:"required"`
+}
+
+type CreateRequest struct {
 	Title   string `json:"title" form:"title" binding:"required"`
 	Article string `json:"article" form:"article" binding:"required"`
 }
 
 func NewBlogUpdate() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		//blogId := ctx.PostForm("bid")
-		//title := ctx.PostForm("title")
-		//article := ctx.PostForm("article")
-		//bid, err := strconv.Atoi(blogId)
-		//if err != nil {
-		//	ctx.String(http.StatusBadRequest, "invalid blog id")
-		//	return
-		//}
 		request := &UpdateRequest{}
 
-		err := ctx.ShouldBind(request) //gin参数校验
+		err := ctx.ShouldBind(request)
 		if err != nil {
 			zap.L().Error("invalid update blog request", zap.Error(err))
 			ctx.String(http.StatusBadRequest, "invalid parameter")
@@ -82,24 +79,62 @@ func NewBlogUpdate() gin.HandlerFunc {
 			ctx.String(http.StatusBadRequest, "blog not exist")
 			return
 		}
-		//身份认证相关
-		loginUid := ctx.Value("uid") //从ctx中获取当前登录用户uid
+
+		loginUid := ctx.Value("uid")
 		if blog.UserId != loginUid || loginUid == nil {
 			ctx.String(http.StatusForbidden, "no permission to update")
 			return
 		}
-		update_data := &database.Blog{
+		updateData := &database.Blog{
 			Id:      bid,
 			Title:   title,
 			Article: article,
 		}
-		err = database.UpdateBlog(update_data)
+		err = database.UpdateBlog(updateData)
 		if err != nil {
 			zap.L().Error("update blog failed", zap.Int("bid", bid), zap.Error(err))
 			ctx.String(http.StatusInternalServerError, "update blog failed")
 			return
 		}
 		ctx.String(http.StatusOK, "update blog success")
+	}
+}
+
+func NewBlogCreate() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		request := &CreateRequest{}
+		err := ctx.ShouldBind(request)
+		if err != nil {
+			zap.L().Error("invalid create blog request", zap.Error(err))
+			ctx.String(http.StatusBadRequest, "invalid parameter")
+			return
+		}
+
+		loginUidValue, ok := ctx.Get("uid")
+		if !ok {
+			ctx.String(http.StatusForbidden, "auth failed")
+			return
+		}
+		loginUid, ok := loginUidValue.(int)
+		if !ok || loginUid <= 0 {
+			ctx.String(http.StatusForbidden, "auth failed")
+			return
+		}
+
+		blog := &database.Blog{
+			UserId:  loginUid,
+			Title:   request.Title,
+			Article: request.Article,
+		}
+
+		err = database.CreateBlog(blog)
+		if err != nil {
+			zap.L().Error("create blog failed", zap.Int("uid", loginUid), zap.Error(err))
+			ctx.String(http.StatusInternalServerError, "create blog failed")
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{"bid": blog.Id})
 	}
 }
 

@@ -31,7 +31,7 @@ func main() {
 	router := gin.Default()
 
 	// 全局中间件, 记录每个接口的调用次数和每次的耗时
-	//router.Use(middleware.Metric())
+	router.Use(middleware.Metric())
 
 	router.GET("/metrics", func(ctx *gin.Context) { // Prometheus要来访问这个接口
 		promhttp.Handler().ServeHTTP(ctx.Writer, ctx.Request)
@@ -54,6 +54,7 @@ func main() {
 	})
 
 	router.POST("/login/submit", handler.NewLogin())
+	router.POST("/register/submit", handler.NewRegister())
 	router.POST("/token", handler.GetAuthToken)
 
 	router.GET("/blog/belong", handler.BlogBelong)
@@ -63,6 +64,7 @@ func main() {
 	router.GET("/blog/:bid", handler.NewBlogDetail()) // 自己访问自己的博客, 能看到“编辑”按钮
 
 	// 修改博客必须先登录。局部中间件
+	router.POST("/blog/create", middleware.Auth(), handler.NewBlogCreate())
 	router.POST("/blog/update", middleware.Auth(), handler.NewBlogUpdate())
 
 	router.Run("localhost:5678")

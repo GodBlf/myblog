@@ -57,6 +57,63 @@
             margin: 0 0 22px;
         }
 
+        .actions {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .btn {
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 9px 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: transparent;
+            background: linear-gradient(90deg, var(--pink), var(--blue));
+        }
+
+        .editor {
+            display: none;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .field,
+        textarea {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.09);
+            color: var(--text);
+            padding: 11px 13px;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 180px;
+            line-height: 1.7;
+        }
+
+        #msg {
+            display: block;
+            margin-top: 8px;
+            min-height: 22px;
+            color: #ff9ebd;
+            text-align: center;
+        }
+
         .list {
             display: grid;
             gap: 12px;
@@ -85,11 +142,52 @@
 <main class="container">
     <h1 class="title">博客列表</h1>
     <p class="sub">选择一篇文章，开启你的番剧式阅读体验</p>
+
+    <div class="actions">
+        <button id="newBlogBtn" class="btn" type="button">新建文章</button>
+    </div>
+
+    <section id="editor" class="editor">
+        <input type="text" id="newTitle" class="field" placeholder="请输入文章标题" />
+        <textarea id="newArticle" placeholder="请输入文章内容"></textarea>
+        <button id="submitBlogBtn" class="btn" type="button">提交</button>
+        <span id="msg"></span>
+    </section>
+
     <section id="list" class="list">
         {{range .}}
         <a class="item" href="/blog/{{.Id}}">{{.Title}}</a>
         {{end}}
     </section>
 </main>
+
+<script>
+    $(document).ready(function () {
+        $("#newBlogBtn").click(function () {
+            $("#editor").toggle();
+            $("#msg").html("");
+        });
+
+        $("#submitBlogBtn").click(function () {
+            var title = document.querySelector("#newTitle").value;
+            var article = document.querySelector("#newArticle").value;
+
+            $.ajax({
+                type: "POST",
+                url: "/blog/create",
+                data: { "title": title, "article": article },
+                beforeSend: function (request) {
+                    var auth_token = get_auth_token();
+                    request.setRequestHeader("auth_token", auth_token);
+                },
+                success: function (result) {
+                    window.location.href = "/blog/" + result.bid;
+                }
+            }).fail(function (result) {
+                $("#msg").html(result.responseText);
+            });
+        });
+    });
+</script>
 </body>
 </html>

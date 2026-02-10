@@ -105,6 +105,12 @@
             box-shadow: 0 10px 20px rgba(121, 187, 255, 0.28);
         }
 
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
         #msg {
             display: block;
             margin-top: 10px;
@@ -129,7 +135,10 @@
             <label for="pass">密码</label>
             <input id="pass" name="pass" type="password" />
         </div>
-        <button type="submit">登录</button>
+        <div class="btn-row">
+            <button type="submit">登录</button>
+            <button type="button" id="registerBtn">注册</button>
+        </div>
     </form>
 
     <span id="msg"></span>
@@ -159,6 +168,32 @@
                     window.location.href = "/blog/list/" + result.uid;
                 }
             }).fail(function (result) {
+                $("#msg").css("color", "#ff9ebd");
+                $("#msg").html(result.responseJSON.msg);
+            });
+        });
+
+        $("#registerBtn").click(function () {
+            const form = document.querySelector("#loginForm");
+            var formData = new FormData(form);
+
+            var pass = formData.get("pass");
+            var digest = CryptoJS.MD5(pass);
+            formData.set("pass", digest);
+
+            $.ajax({
+                url: "/register/submit",
+                data: formData,
+                method: "post",
+                processData: false,
+                contentType: false,
+                enctype: "multipart/form-data",
+                success: function () {
+                    $("#msg").css("color", "#7CFFB2");
+                    $("#msg").html("注册成功，请登录");
+                }
+            }).fail(function (result) {
+                $("#msg").css("color", "#ff9ebd");
                 $("#msg").html(result.responseJSON.msg);
             });
         });

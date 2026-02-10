@@ -11,10 +11,15 @@ import (
 )
 
 type LoginResponse struct {
-	Code  int    `json:"code"` //前后端分离，前端根据code向用户展示对应的话术。如果需要改话术，后端代码不用动
-	Msg   string `json:"msg"`  //msg用于开发人员调试, 不是给用户看的
+	Code  int    `json:"code"`
+	Msg   string `json:"msg"`
 	Uid   int    `json:"uid"`
 	Token string `json:"token"`
+}
+
+type RegisterResponse struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 func NewLogin() gin.HandlerFunc {
@@ -37,10 +42,10 @@ func NewLogin() gin.HandlerFunc {
 			ctx.JSON(
 				http.StatusBadRequest,
 				&LoginResponse{
-					2,
-					"invalid password",
-					0,
-					"",
+					Code:  2,
+					Msg:   "invalid password",
+					Uid:   0,
+					Token: "",
 				},
 			)
 			return
@@ -119,4 +124,64 @@ func GetAuthToken(ctx *gin.Context) {
 	refreshToken := ctx.PostForm("refresh_token")
 	authToken := database.GetToken(refreshToken)
 	ctx.String(http.StatusOK, authToken)
+}
+
+func NewRegister() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		name := ctx.PostForm("user")
+		pass := ctx.PostForm("pass")
+
+		if len(name) == 0 {
+			ctx.JSON(
+				http.StatusBadRequest,
+				&RegisterResponse{
+					Code: 1,
+					Msg:  "must indicate user name",
+				},
+			)
+			return
+		}
+
+		if len(pass) != 32 {
+			ctx.JSON(
+				http.StatusBadRequest,
+				&RegisterResponse{
+					Code: 2,
+					Msg:  "invalid password",
+				},
+			)
+			return
+		}
+
+		if database.GetUserByName(name) != nil {
+			ctx.JSON(
+				http.StatusConflict,
+				&RegisterResponse{
+					Code: 3,
+					Msg:  "user already exist",
+				},
+			)
+			return
+		}
+
+		err := database.CreateUser(name, pass)
+		if err != nil {
+			ctx.JSON(
+				http.StatusInternalServerError,
+				&RegisterResponse{
+					Code: 4,
+					Msg:  "create user failed",
+				},
+			)
+			return
+		}
+
+		ctx.JSON(
+			http.StatusOK,
+			&RegisterResponse{
+				Code: 0,
+				Msg:  "success",
+			},
+		)
+	}
 }
