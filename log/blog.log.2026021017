@@ -1,0 +1,47 @@
+{"level":"INFO","ts":"2026-02-10T17:03:06.426+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-10T17:03:06.452+0800","caller":"handler/login.go:77","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-10T17:03:06.470+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T17:03:06.497+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:03:10.354+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"双十一来临喜洋洋，购物狂欢乐无边。电商盛宴满眼芳，心愿成真喜笑颜。"}
+{"level":"DEBUG","ts":"2026-02-10T17:03:24.111+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重123要..."}
+{"level":"INFO","ts":"2026-02-10T17:17:01.917+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-10T17:21:30.050+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"DEBUG","ts":"2026-02-10T17:21:30.069+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"INFO","ts":"2026-02-10T17:21:39.725+0800","caller":"handler/login.go:77","msg":"user login success","name":"five","uid":5}
+{"level":"INFO","ts":"2026-02-10T17:21:39.774+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T17:21:39.800+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":5,"blog count":1}
+{"level":"DEBUG","ts":"2026-02-10T17:25:39.859+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"INFO","ts":"2026-02-10T17:28:53.388+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"DEBUG","ts":"2026-02-10T17:28:53.423+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:28:56.498+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重123要..."}
+{"level":"DEBUG","ts":"2026-02-10T17:28:58.251+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"双十一来临喜洋洋，购物狂欢乐无边。电商盛宴满眼芳，心愿成真喜笑颜。"}
+{"level":"DEBUG","ts":"2026-02-10T17:29:11.464+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:29:13.405+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重123要..."}
+{"level":"DEBUG","ts":"2026-02-10T17:29:18.407+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"双十一来临喜洋洋，购物狂欢乐无边。电商盛宴满眼芳，心愿成真喜笑颜。"}
+{"level":"INFO","ts":"2026-02-10T17:29:31.202+0800","caller":"handler/login.go:77","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-10T17:29:31.240+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T17:29:31.263+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:29:59.683+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:30:01.261+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"test"}
+{"level":"DEBUG","ts":"2026-02-10T17:30:07.535+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:30:20.193+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:30:21.419+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重123要..."}
+{"level":"DEBUG","ts":"2026-02-10T17:30:55.470+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:31:01.913+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:31:02.628+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重123要..."}
+{"level":"INFO","ts":"2026-02-10T17:31:48.085+0800","caller":"database/user.go:51","msg":"create user success","name":"许昊龙"}
+{"level":"INFO","ts":"2026-02-10T17:31:48.820+0800","caller":"handler/login.go:77","msg":"user login success","name":"许昊龙","uid":12}
+{"level":"DEBUG","ts":"2026-02-10T17:31:48.856+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":12,"blog count":0}
+{"level":"DEBUG","ts":"2026-02-10T17:31:56.448+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"INFO","ts":"2026-02-10T17:32:07.303+0800","caller":"handler/login.go:77","msg":"user login success","name":"two","uid":2}
+{"level":"DEBUG","ts":"2026-02-10T17:32:07.362+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":2,"blog count":1}
+{"level":"DEBUG","ts":"2026-02-10T17:32:10.833+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"关键在于牛奶的温度和咖啡豆的新鲜度..."}
+{"level":"DEBUG","ts":"2026-02-10T17:32:20.230+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:32:23.518+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:32:29.238+0800","caller":"handler/blog.go:47","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重123要..."}
+{"level":"DEBUG","ts":"2026-02-10T17:32:39.908+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T17:32:44.497+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}
+{"level":"INFO","ts":"2026-02-10T17:33:21.295+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-10T17:34:42.733+0800","caller":"handler/login.go:77","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-10T17:34:42.776+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T17:34:42.804+0800","caller":"handler/blog.go:22","msg":"get blog list","uid":1,"blog count":3}

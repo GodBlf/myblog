@@ -1,0 +1,16 @@
+{"level":"INFO","ts":"2026-02-10T16:40:08.186+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-10T16:40:08.211+0800","caller":"handler/login.go:77","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-10T16:40:08.245+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T16:40:08.280+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T16:40:10.347+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"双十一来临喜洋洋，购物狂欢乐无边。电商盛宴满眼芳，心愿成真喜笑颜。"}
+{"level":"INFO","ts":"2026-02-10T16:41:30.032+0800","caller":"handler/login.go:77","msg":"user login success","name":"one","uid":1}
+{"level":"DEBUG","ts":"2026-02-10T16:41:30.063+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T16:41:40.690+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重123要..."}
+{"level":"INFO","ts":"2026-02-10T16:46:33.775+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-10T16:46:33.819+0800","caller":"database/user.go:51","msg":"create user success","name":"ttt"}
+{"level":"INFO","ts":"2026-02-10T16:46:35.533+0800","caller":"handler/login.go:77","msg":"user login success","name":"ttt","uid":11}
+{"level":"INFO","ts":"2026-02-10T16:46:35.549+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T16:46:35.594+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":11,"blog count":0}
+{"level":"DEBUG","ts":"2026-02-10T16:46:38.811+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"dsaf"}
+{"level":"INFO","ts":"2026-02-10T16:49:52.398+0800","caller":"handler/login.go:77","msg":"user login success","name":"ttt","uid":11}
+{"level":"DEBUG","ts":"2026-02-10T16:49:52.420+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":11,"blog count":1}

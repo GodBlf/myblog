@@ -25,11 +25,13 @@
             min-height: 100vh;
             font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
             color: var(--text);
-            background:
-                radial-gradient(circle at 15% 20%, rgba(255, 121, 198, 0.24), transparent 35%),
-                radial-gradient(circle at 85% 15%, rgba(122, 184, 255, 0.26), transparent 32%),
-                linear-gradient(145deg, var(--bg-a), var(--bg-b));
+            background-color: var(--bg-a);
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(255, 121, 198, 0.15), transparent 35%),
+                radial-gradient(circle at 85% 15%, rgba(122, 184, 255, 0.15), transparent 32%);
             padding: 28px 16px;
+            position: relative;
+            z-index: 1;
         }
 
         .container {
@@ -60,7 +62,9 @@
         .actions {
             display: flex;
             justify-content: center;
+            gap: 12px;
             margin-bottom: 18px;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -145,6 +149,7 @@
 
     <div class="actions">
         <button id="newBlogBtn" class="btn" type="button">新建文章</button>
+        <button id="publicSquareBtn" class="btn" type="button">公共展示区</button>
     </div>
 
     <section id="editor" class="editor">
@@ -168,6 +173,10 @@
             $("#msg").html("");
         });
 
+        $("#publicSquareBtn").click(function () {
+            window.location.href = "/blog/public";
+        });
+
         $("#submitBlogBtn").click(function () {
             var title = document.querySelector("#newTitle").value;
             var article = document.querySelector("#newArticle").value;
@@ -189,5 +198,7 @@
         });
     });
 </script>
+<script src="/js/particles.js"></script>
 </body>
 </html>
+

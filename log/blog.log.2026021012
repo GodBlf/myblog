@@ -1,0 +1,13 @@
+{"level":"INFO","ts":"2026-02-10T12:17:15.213+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-10T12:17:15.250+0800","caller":"handler/login.go:72","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-10T12:17:15.295+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T12:17:15.332+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":1,"blog count":2}
+{"level":"DEBUG","ts":"2026-02-10T12:17:16.880+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"在处理大数据量时，复合索引的顺序至关重123要..."}
+{"level":"INFO","ts":"2026-02-10T12:17:31.387+0800","caller":"handler/login.go:72","msg":"user login success","name":"three","uid":3}
+{"level":"DEBUG","ts":"2026-02-10T12:17:31.404+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":3,"blog count":1}
+{"level":"INFO","ts":"2026-02-10T12:41:52.121+0800","caller":"test/logger_test.go:12","msg":"这是一个测试日志","key":"value"}
+{"level":"INFO","ts":"2026-02-10T12:46:59.261+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-10T12:47:01.046+0800","caller":"handler/login.go:72","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-10T12:47:01.068+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T12:47:01.086+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":1,"blog count":2}
+{"level":"DEBUG","ts":"2026-02-10T12:47:02.522+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"双十一来临喜洋洋，购物狂欢乐无边。电商盛宴满眼芳，心愿成真喜笑颜。"}

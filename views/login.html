@@ -30,10 +30,13 @@
             padding: 20px;
             font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
             color: var(--text);
-            background:
-                radial-gradient(circle at 14% 16%, rgba(255, 121, 198, 0.24), transparent 34%),
-                radial-gradient(circle at 86% 18%, rgba(121, 187, 255, 0.26), transparent 31%),
-                linear-gradient(145deg, var(--bg-a), var(--bg-b));
+            /* Dark anime base */
+            background-color: var(--bg-a);
+            background-image:
+                radial-gradient(circle at 14% 16%, rgba(255, 121, 198, 0.15), transparent 34%),
+                radial-gradient(circle at 86% 18%, rgba(121, 187, 255, 0.15), transparent 31%);
+            position: relative;
+            z-index: 1;
         }
 
         .card {
@@ -199,5 +202,6 @@
         });
     });
 </script>
+<script src="/js/particles.js"></script>
 </body>
 </html>

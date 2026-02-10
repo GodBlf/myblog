@@ -1,0 +1,16 @@
+{"level":"INFO","ts":"2026-02-10T15:01:08.005+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-10T15:01:08.045+0800","caller":"database/user.go:51","msg":"create user success","name":"nine"}
+{"level":"INFO","ts":"2026-02-10T15:01:09.834+0800","caller":"handler/login.go:77","msg":"user login success","name":"nine","uid":10}
+{"level":"INFO","ts":"2026-02-10T15:01:09.869+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T15:01:09.889+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":10,"blog count":0}
+{"level":"INFO","ts":"2026-02-10T15:12:21.391+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"INFO","ts":"2026-02-10T15:12:21.405+0800","caller":"handler/login.go:77","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-10T15:12:21.420+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T15:12:21.440+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":1,"blog count":2}
+{"level":"ERROR","ts":"2026-02-10T15:12:30.889+0800","caller":"handler/blog.go:132","msg":"create blog failed","uid":1,"error":"Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'update_time' at row 1"}
+{"level":"INFO","ts":"2026-02-10T15:16:18.531+0800","caller":"database/db_connection.go:55","msg":"connect to mysql db","dbname":"myblog"}
+{"level":"DEBUG","ts":"2026-02-10T15:16:18.663+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"test"}
+{"level":"INFO","ts":"2026-02-10T15:16:25.335+0800","caller":"handler/login.go:77","msg":"user login success","name":"one","uid":1}
+{"level":"INFO","ts":"2026-02-10T15:16:25.359+0800","caller":"database/db_connection.go:101","msg":"connected to redis","result":"PONG"}
+{"level":"DEBUG","ts":"2026-02-10T15:16:25.374+0800","caller":"handler/blog.go:23","msg":"get blog list","uid":1,"blog count":3}
+{"level":"DEBUG","ts":"2026-02-10T15:16:26.249+0800","caller":"handler/blog.go:42","msg":"get blog detail","article":"test"}

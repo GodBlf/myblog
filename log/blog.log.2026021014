@@ -1,0 +1,1 @@
+{"level":"INFO","ts":"2026-02-10T14:56:49.947+0800","caller":"test/logger_test.go:12","msg":"这是一个测试日志","key":"value"}
