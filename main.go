@@ -39,6 +39,8 @@ func main() {
 
 	// 在url中访问目录/js相当于访问文件系统中的views/js目录
 	router.Static("/js", "views/js")
+	router.Static("/css", "views/css")
+	router.Static("/img", "views/img")
 
 	// 在url中访问文件/favicon.ico, 相当于访问文件系统中的views/img/dqq.png文件
 	router.StaticFile("/favicon.ico", "views/img/dqq.png")
