@@ -24,7 +24,16 @@ var (
 
 	blog_redis      *redis.Client
 	blog_redis_once sync.Once
+	schemaOnce      sync.Once
 )
+
+func ensureSchema(db *gorm.DB) {
+	schemaOnce.Do(func() {
+		if err := db.AutoMigrate(&User{}, &Blog{}, &PublicBlog{}); err != nil {
+			zap.L().Panic("auto migrate schema failed", zap.Error(err))
+		}
+	})
+}
 
 func init() { //db log
 	dblog = ormlog.New(
@@ -66,6 +75,7 @@ func GetBlogDBConnection() *gorm.DB { //链接myblog数据库
 		user := viper.GetString(dbName + ".user")
 		pass := viper.GetString(dbName + ".password")
 		blog_mysql = createMysqlDB(dbName, host, user, pass, port)
+		ensureSchema(blog_mysql)
 	})
 	return blog_mysql
 }
@@ -80,6 +90,7 @@ func InitBlogDBConnection() *gorm.DB { //初始化链接myblog数据库的变量
 		user := viper.GetString(dbName + ".user")
 		pass := viper.GetString(dbName + ".password")
 		blog_mysql = createMysqlDB(dbName, host, user, pass, port)
+		ensureSchema(blog_mysql)
 	})
 	return blog_mysql
 }
