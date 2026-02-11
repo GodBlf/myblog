@@ -57,6 +57,9 @@ func main() {
 	router.GET("/blog/list/:uid", handler.NewBlogList())
 	router.GET("/blog/:bid", handler.NewBlogDetail())
 	router.GET("/blog/public/:bid", handler.NewPublicBlogDetail())
+	router.GET("/blog/public/:bid/comments", handler.NewPublicBlogComments())
+	router.POST("/blog/public/:bid/comments", middleware.Auth(), handler.NewPublicBlogCommentCreate())
+	router.DELETE("/blog/public/:bid/comments/:cid", middleware.Auth(), handler.NewPublicBlogCommentDelete())
 
 	router.POST("/blog/create", middleware.Auth(), handler.NewBlogCreate())
 	router.POST("/blog/update", middleware.Auth(), handler.NewBlogUpdate())

@@ -100,6 +100,133 @@
             border-color: transparent;
             background: linear-gradient(90deg, var(--pink), var(--blue));
         }
+
+        .comment-panel {
+            margin-top: 26px;
+            padding: 20px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+        }
+
+        .comment-title {
+            margin: 0 0 14px;
+            font-size: 22px;
+            text-shadow: 0 0 10px rgba(122, 184, 255, 0.35);
+        }
+
+        .comment-list {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .comment-item {
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 12px 14px;
+        }
+
+        .comment-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+            color: var(--sub);
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .comment-content {
+            color: #eef1ff;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .comment-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .comment-delete-btn {
+            border: 1px solid rgba(255, 158, 189, 0.66);
+            background: rgba(255, 158, 189, 0.18);
+            color: #ffeaf2;
+            border-radius: 999px;
+            padding: 5px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .comment-delete-btn:hover {
+            transform: translateY(-1px);
+            border-color: transparent;
+            background: linear-gradient(90deg, var(--danger), var(--pink));
+        }
+
+        .comment-delete-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .comment-empty {
+            color: var(--sub);
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .comment-editor {
+            display: grid;
+            gap: 10px;
+        }
+
+        .comment-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            resize: vertical;
+            color: var(--text);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+            outline: none;
+        }
+
+        .comment-input:focus {
+            border-color: rgba(122, 184, 255, 0.65);
+            box-shadow: 0 0 0 2px rgba(122, 184, 255, 0.22);
+        }
+
+        .comment-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #commentMsg {
+            color: var(--sub);
+            font-size: 13px;
+        }
+
+        @media (max-width: 640px) {
+            .panel {
+                padding: 20px;
+            }
+
+            .comment-panel {
+                padding: 14px;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -113,7 +240,139 @@
     <div class="article">{{.article}}</div>
     <div class="meta">作者：{{.user_name}}</div>
     <div class="meta">最近更新：{{.update_time}}</div>
+
+    <section class="comment-panel">
+        <h2 class="comment-title">评论</h2>
+        <div id="commentList" class="comment-list"></div>
+        <div class="comment-editor">
+            <textarea id="commentInput" class="comment-input" maxlength="1000" placeholder="输入评论内容（最多 1000 字）"></textarea>
+            <div class="comment-bottom">
+                <button id="commentSubmit" class="btn" type="button">发表评论</button>
+                <span id="commentMsg"></span>
+            </div>
+        </div>
+    </section>
 </main>
+<script>
+    (function () {
+        var bid = {{.bid}};
+
+        function escapeHtml(content) {
+            return $("<div></div>").text(content || "").html();
+        }
+
+        function renderComments(comments) {
+            var html = "";
+            if (!comments || comments.length === 0) {
+                html = '<div class="comment-empty">暂无评论，来发表第一条评论吧~</div>';
+                $("#commentList").html(html);
+                return;
+            }
+            $.each(comments, function (_, item) {
+                var userName = escapeHtml(item.user_name || "未知用户");
+                var content = escapeHtml(item.content || "");
+                var createTime = escapeHtml(item.create_time || "");
+                html += '' +
+                    '<div class="comment-item">' +
+                    '  <div class="comment-meta">' +
+                    '    <span>用户：' + userName + '</span>' +
+                    '    <span>时间：' + createTime + '</span>' +
+                    '  </div>' +
+                    '  <div class="comment-content">' + content + '</div>' +
+                    '  <div class="comment-actions">' +
+                    '    <button class="comment-delete-btn" type="button" data-cid="' + item.id + '">删除</button>' +
+                    '  </div>' +
+                    '</div>';
+            });
+            $("#commentList").html(html);
+        }
+
+        function loadComments() {
+            $.ajax({
+                type: "GET",
+                url: "/blog/public/" + bid + "/comments",
+                success: function (result) {
+                    renderComments(result);
+                }
+            }).fail(function (result) {
+                var message = result.responseText || "加载评论失败";
+                $("#commentList").html('<div class="comment-empty">' + escapeHtml(message) + '</div>');
+            });
+        }
+
+        $("#commentSubmit").on("click", function () {
+            var content = $("#commentInput").val();
+            $("#commentMsg").text("发布中...");
+            $.ajax({
+                type: "POST",
+                url: "/blog/public/" + bid + "/comments",
+                data: {"content": content},
+                beforeSend: function (request) {
+                    var auth_token = get_auth_token();
+                    request.setRequestHeader("auth_token", auth_token);
+                },
+                success: function () {
+                    $("#commentInput").val("");
+                    $("#commentMsg").text("评论发布成功");
+                    loadComments();
+                }
+            }).fail(function (result) {
+                if (result.status === 403) {
+                    $("#commentMsg").text("请先登录再评论");
+                    return;
+                }
+                $("#commentMsg").text(result.responseText || "评论发布失败");
+            });
+        });
+
+        $("#commentList").on("click", ".comment-delete-btn", function () {
+            var deleteBtn = $(this);
+            var cid = deleteBtn.data("cid");
+            if (!cid) {
+                $("#commentMsg").text("评论参数错误");
+                return;
+            }
+            if (!window.confirm("确认删除这条评论？")) {
+                return;
+            }
+
+            deleteBtn.prop("disabled", true).text("删除中...");
+            $("#commentMsg").text("删除中...");
+
+            $.ajax({
+                type: "DELETE",
+                url: "/blog/public/" + bid + "/comments/" + cid,
+                beforeSend: function (request) {
+                    var auth_token = get_auth_token();
+                    request.setRequestHeader("auth_token", auth_token);
+                },
+                success: function () {
+                    $("#commentMsg").text("评论删除成功");
+                    loadComments();
+                }
+            }).fail(function (result) {
+                if (result.status === 403) {
+                    if ((result.responseText || "").indexOf("no permission") !== -1) {
+                        $("#commentMsg").text("仅可删除自己的评论");
+                    } else {
+                        $("#commentMsg").text("请先登录后再删除");
+                    }
+                    return;
+                }
+                if (result.status === 404) {
+                    $("#commentMsg").text("评论不存在或已删除");
+                    loadComments();
+                    return;
+                }
+                $("#commentMsg").text(result.responseText || "评论删除失败");
+            }).always(function () {
+                deleteBtn.prop("disabled", false).text("删除");
+            });
+        });
+
+        loadComments();
+    })();
+</script>
 <script src="/js/particles.js"></script>
 </body>
 </html>
