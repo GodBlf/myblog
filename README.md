@@ -108,6 +108,12 @@ docker compose up --build
   - `blog_id`（主键）
   - `user_id`
   - `publish_time`
+- `blog_comment`
+  - `id`（主键）
+  - `blog_id`
+  - `user_id`
+  - `content`
+  - `create_time`
 
 ## 7. 认证与鉴权
 
@@ -144,6 +150,7 @@ auth_token: <JWT>
 - `POST /token`：通过 `refresh_token` 获取 `auth_token`
 - `GET /blog/public`：公开博客列表页
 - `GET /blog/public/:bid`：公开博客详情页
+- `GET /blog/public/:bid/comments`：公开博客评论列表（JSON）
 - `GET /blog/list/:uid`：指定用户博客列表页
 - `GET /blog/:bid`：博客详情页
 - `GET /blog/belong?bid=<id>&token=<jwt>`：判断博客是否归属当前用户
@@ -160,6 +167,17 @@ auth_token: <JWT>
   - 参数：`bid`
 - `POST /blog/unpublish`
   - 参数：`bid`
+- `POST /blog/public/:bid/comments`
+  - 参数：`content`
+- `DELETE /blog/public/:bid/comments/:cid`
+  - 说明：仅评论作者可删除自己的评论
+
+## 8.3 公共评论功能说明
+
+- 公共文章详情页（`/blog/public/:bid`）支持评论展示与发布。
+- 评论展示包含：用户名、评论时间、评论内容。
+- 前端每条评论都显示“删除”按钮；删除请求会携带 `auth_token`。
+- 后端会做权限校验：只有评论作者本人可以删除，非本人删除返回 `403`。
 
 > 前端在登录与注册时会将明文密码做 MD5 后再提交，因此后端接口目前要求 `pass` 长度为 32。
 
@@ -230,4 +248,3 @@ go test ./...
 - 将 JWT 密钥从代码常量迁移到配置文件/环境变量
 - 登录密码流程升级为服务端加盐哈希（如 bcrypt/argon2）
 - 为关键接口补充更系统的单元测试与集成测试
-

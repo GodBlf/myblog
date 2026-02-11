@@ -26,6 +26,11 @@
 - `doc/`：文档目录（若新增文档，优先放此处）。
 - `log/`：运行日志输出目录。
 
+补充（评论功能相关）：
+
+- `database/comment.go`：公开评论的数据模型、查询、创建、删除与权限约束。
+- `handler/comment.go`：公开评论 HTTP 接口（列表、创建、删除）。
+
 ## 3) 开发与运行
 
 - 安装依赖：`go mod tidy`
@@ -63,11 +68,21 @@
 4. 若涉及静态资源，确认放置路径与 `router.Static(...)` 映射一致。
 5. 补充最小必要测试（优先同目录 `test/`）。
 
+评论相关路由约定（当前实现）：
+
+- `GET /blog/public/:bid/comments`：获取公开文章评论列表。
+- `POST /blog/public/:bid/comments`：创建评论（需 `auth_token`）。
+- `DELETE /blog/public/:bid/comments/:cid`：删除评论（需 `auth_token`，仅作者本人可删）。
+
 ## 7) 数据层变更清单
 
 - 任何与 Blog/User/Token 持久化相关改动，优先落在 `database/`。
 - 保持函数语义单一：查询、创建、更新、发布/取消发布分离。
 - 如涉及权限判断，业务入口在 `handler/`，数据一致性在 `database/`。
+
+评论权限补充约束：
+
+- 删除评论时，必须在 `database/` 做“评论归属用户”校验，不能仅依赖前端按钮控制。
 
 ## 8) 提交质量要求（代理执行）
 
